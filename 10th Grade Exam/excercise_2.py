@@ -1,4 +1,8 @@
 # Ülesanne 2
+#
+# Description:
+# Cypher user's message by given steps
+#
 
 # Get user input to cypher
 crypt_this = input("Enter plain message: ")
