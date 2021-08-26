@@ -1,4 +1,8 @@
 # Ülesanne 1
+#
+# Description:
+# Remove any continuous letters from string
+#
 
 def test(sõne):
     list(sõne) # -> array
