@@ -1,7 +1,7 @@
 # Excercise 3
 #
 # Description:
-# While input isn't "Alohomora", ask person "But why?"
+# While input isn't "Alohomora", ask person "But why?" 
 #
 
 while True:
