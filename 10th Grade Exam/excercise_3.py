@@ -1,4 +1,4 @@
-# Excercise 3
+# Ülesanne 3
 #
 # Description:
 # While input isn't "Alohomora", ask person "But why?" 
