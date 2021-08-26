@@ -1,6 +1,6 @@
 # Excercise 3
 #
-# Description
+# Description:
 # While input isn't "Alohomora", ask person "But why?"
 #
 
