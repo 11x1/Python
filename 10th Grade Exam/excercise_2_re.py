@@ -15,4 +15,4 @@ def crypt_func(default_text, step):
             final += cypher_source[index + step] # add the cyphered letter to final string
     print(final)
 
-crypt_func("abcdefgxyz", 3)
+crypt_func("abcdefgxyz", 3) 
