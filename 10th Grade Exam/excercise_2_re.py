@@ -1,4 +1,8 @@
-# Ulesanne 2
+# Ülesanne 2
+#
+# Description:
+# Cypher user's message by given steps
+#
 
 def crypt_func(default_text, step):
     final = "" # define final string variable
