@@ -20,6 +20,9 @@ password = "your password"
 webhook_url = "webhook url"
 webhook_username = "homework webhook"
 
+# Change this to your own stuudium login page
+login_page = "https://nrg.ope.ee/auth/"
+
 # Define binary and driver location
 options = webdriver.ChromeOptions()
 
@@ -35,7 +38,7 @@ while True:
     if datetime.datetime.now().hour == 17 and datetime.datetime.now().minute == 00 and datetime.datetime.now().second == 00:
         time_start = datetime.datetime.now()
         driver = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
-        driver.get("https://nrg.ope.ee/auth/")
+        driver.get(login_page)
 
         driver.find_element_by_class_name("username").send_keys(username)
         driver.find_element_by_class_name("password").send_keys(password)
