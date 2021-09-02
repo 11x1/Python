@@ -1,0 +1,111 @@
+# Used python version: 3.8.1 web-based (https://www.python.org/ftp/python/3.8.1/python-3.8.1-amd64-webinstall.exe)
+# install selenium with "Python -m pip install -U Selenium"
+# and requests with "Python pip install requests"
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+import datetime
+import requests
+
+"""
+username = input("Username: ")
+password = input("Password: ")
+webhook_url = input("Webhook URL: ")
+"""
+
+# Needed data for code to work
+username = "your email"
+password = "your password"
+webhook_url = "webhook url"
+webhook_username = "homework webhook"
+
+# Define binary and driver location
+options = webdriver.ChromeOptions()
+
+# Download corresponding chrome driver from https://chromedriver.chromium.org/downloads
+# (chromedriver_win32.zip) and extract it anywhere.
+# Replace the 2 fields with correct paths
+options.binary_location = r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+chrome_driver_binary = r"C:\Users\riis\PycharmProjects\SeleniumTest\Browsers\chromedriver.exe"
+
+while True:
+    # Every day at 5 PM, send message
+    # Too tired to comment atp
+    if datetime.datetime.now().hour == 17 and datetime.datetime.now().minute == 00 and datetime.datetime.now().second == 00:
+        time_start = datetime.datetime.now()
+        driver = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+        driver.get("https://nrg.ope.ee/auth/")
+
+        driver.find_element_by_class_name("username").send_keys(username)
+        driver.find_element_by_class_name("password").send_keys(password)
+        driver.find_element_by_class_name("button").send_keys(Keys.ENTER)
+        time_end = datetime.datetime.now()
+
+        print(
+            f"Executed startup successfully. Waited {(time_end - time_start).microseconds / 1000000} seconds for webpage "
+            f"initialization.")
+        time.sleep(0.5)
+
+        todo_elements = driver.find_elements_by_class_name("todo_container")
+        todo_days = driver.find_elements_by_class_name("group_heading")
+
+        driver.find_element_by_class_name("show-future").click()
+
+        time_start = datetime.datetime.now()
+        first_message = True
+        subject_last_date = ""
+        for element in todo_elements:
+            subject_date = element.get_attribute("data-date")
+            if subject_date != subject_last_date:
+                subject_last_date = subject_date
+                subject_date = subject_last_date.replace(str(datetime.datetime.now().year), '')
+                # print(f"Homework for {subject_date[:2]}.{subject_date[2:]}\n")
+
+            subject_name = element.find_element_by_class_name("subject_name").text
+            subject_description = element.find_element_by_class_name("todo_content").text
+            if "Kontrolltöö" in element.text:
+                subject_name = f"[ KONTROLLTÖÖ ] {subject_name}"
+            # if subject_name != "":
+            #   print(f"Subject : {subject_name}\nDescription: {subject_description}\n")
+
+            if first_message:
+                webhook_data = {"content": f"@everyone Homework time, oowiee",
+                                "username": webhook_username}
+                result = requests.post(webhook_url, json=webhook_data)
+                try:
+                    result.raise_for_status()
+                except requests.exceptions.HTTPError as err:
+                    print(err)
+                else:
+                    print("Payload delivered successfully, code {}.".format(result.status_code))
+                time.sleep(2)
+                first_message = False
+
+            if subject_date == subject_last_date:
+                subject_date = ""
+                webhook_message = ""
+            else:
+                webhook_message = f"Homework for {subject_date[:2]}.{subject_date[2:]}\n"
+
+            webhook_data = {"content": webhook_message, "username": webhook_username, "embeds": [
+                {
+                    "description": subject_description,
+                    "title": subject_name
+                }
+            ]}
+            result = requests.post(webhook_url, json=webhook_data)
+            try:
+                result.raise_for_status()
+            except requests.exceptions.HTTPError as err:
+                print(err)
+            else:
+                print("Payload delivered successfully, code {}.".format(result.status_code))
+            time.sleep(2)
+        time_end = datetime.datetime.now()
+        time_delta = time_end - time_start
+
+        print(f"Got all webelements in {time_delta.microseconds / 1000000} seconds.")
+
+        time.sleep(100)
+        driver.close()
