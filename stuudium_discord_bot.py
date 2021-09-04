@@ -87,6 +87,8 @@ async def on_message(message):
         if message.author == client.user:
             return
 
+        driver = webdriver.Chrome(driver_path, options=options)
+
         username = ""
         password = ""
         should_send_error = True
@@ -139,7 +141,8 @@ async def on_message(message):
         try:
             driver.find_element_by_class_name("show-future").click()
         except:
-            await message.author.send("Couldn't get future homework.")
+            await message.author.send("Couldn't get homework. Is login data correct? (can also be due to shit server but yk)")
+            return
         time_start = datetime.datetime.now()
         for element in todo_elements:
             subject_date = element.get_attribute("data-date").replace(str(datetime.datetime.now().year), '')
@@ -157,6 +160,7 @@ async def on_message(message):
                 value=subject_description,
             )
 
+        driver.close()
         time_end = datetime.datetime.now()
         time_delta = time_end - time_start
 
@@ -167,7 +171,6 @@ async def on_message(message):
         print(f"Got all webelements in {time_delta.microseconds / 1000000} seconds.")
         print(f"Total: {datetime.datetime.now() - time_finished_start}.")
         await message.author.send(embed=data_send)
-        driver.close()
 
     if message.content.startswith('!ping ') or message.content == "!ping":
         msg = "{0.author.mention} pong!".format(message)
@@ -193,9 +196,20 @@ async def on_message(message):
                 if str(message.author) == a[0]:
                     msg1 = discord.Embed(
                         title="__Auth Response__",
-                        description=f"Already authenticated!\n"
+                        description=f"Overriding your last auth!\n"
                     )
                     await message.author.send(embed=msg1)
+                    del line
+                    with open(datafile_path, "w") as file2:
+                        file2.write(
+                            f"{all_text}{message.author}:{message.content.split()[1].split(':')[0]}:"
+                            f"{message.content.split()[1].split(':')[1]}:\n")
+                        msg1 = discord.Embed(
+                            title="",
+                            description=f"Authenticated!\n"
+                        )
+                        print(f"{message.author} authenticated!")
+                        await message.author.send(embed=msg1)
                     return
                 all_text += line[:len(line)]
 
