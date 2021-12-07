@@ -4,6 +4,18 @@
 # Take an array containing finished tic-tac-toe game table and check who won
 #
 
+# Update (07.12.2021)
+# This would not work if one of the elements position isn't in win condition position but that element type still won:
+# ex.
+#
+#    X X O   table (x)  1 1 0
+#    X O O      ->      1 0 0
+#    X                  1 0 0
+#
+# X still won but table [1, 1, 0, 1, 0, 0, 1, 0, 0] isn't in win conditions -> use exercise_5_re_p.py
+#
+
+
 def tripsTrapsTrullTulemus(table_array):
     winner = "-" # define winner
     X_series = [] # define X spots array
