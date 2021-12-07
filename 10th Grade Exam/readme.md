@@ -1,2 +1,2 @@
 # Exam exercises
-[-] All files ending with "_re" are made after the exam (read as: under no pressure)
+[-] All files ending with "_re" are made after the exam
