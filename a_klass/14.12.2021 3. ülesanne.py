@@ -22,11 +22,6 @@ class helpers:
             mees.left(90)
             mees.forward(size)
             mees.left(90)
-            size -= 5
-            mees.forward(size)
-            mees.left(90)
-            mees.forward(size)
-            mees.left(90)
         time.sleep(3)
     
     def rect(self, max_size_x, max_size_y):
@@ -41,12 +36,6 @@ class helpers:
             mees.left(90)
             mees.forward(size_y)
             mees.left(90)
-            size_x -= 5
-            size_y -= 5
-            mees.forward(size_x)
-            mees.left(90)
-            mees.forward(size_y)
-            mees.left(90)
         time.sleep(3)
 
     def triangle(self, max_size):
@@ -54,12 +43,6 @@ class helpers:
         size = max_size
         mees.speed(10) 
         while size > 0:
-            size -= 5
-            mees.forward(size)
-            mees.left(120)
-            size -= 5
-            mees.forward(size)
-            mees.left(120)
             size -= 5
             mees.forward(size)
             mees.left(120)
