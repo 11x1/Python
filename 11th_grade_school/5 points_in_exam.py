@@ -53,5 +53,5 @@ while True:
                     if sum(kas[actiontype][usern]['punktid']) > 80:
                         next_message = "Pääsesid järgmisesse vooru!\n"
                     print(f"   {next_message}\n")
-                    
+              
  
