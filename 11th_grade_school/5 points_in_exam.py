@@ -54,4 +54,4 @@ while True:
                         next_message = "Pääsesid järgmisesse vooru!\n"
                     print(f"   {next_message}\n")
               
- 
+  
