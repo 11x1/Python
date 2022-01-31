@@ -1,4 +1,5 @@
 # Prob has shit ton of exploits (ie. can delete whole system)
+# Also very basic
 import js2py
 
 # Discord bot shit
