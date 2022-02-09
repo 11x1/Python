@@ -13,17 +13,17 @@ from PIL import Image, ImageFont, ImageDraw
 
 phrase = input('Phrase: ')
 
-first_letter_color = '#eb9fb0'
+first_letter_color = '#e2b6c7'
 further_letter_color = '#d7d7d7'
 background_color = '#2d2d2d'
 
 logo_gif = Image.open('logo.gif')
 
-gif_def_height, _, _ = logo_gif.shape()
+gif_def_width, gif_def_height = logo_gif.size
 gif_def_height = int(gif_def_height)
-gif_padding = 400
+gif_padding = 200
 
-# Create a temporary image to find out string size
+# Create a temporary image to find out string size (no need to change anything here)
 temp = Image.new('RGB', (196, 100), background_color)
 font = ImageFont.truetype("primordial.ttf", 400)
 text_sample = ImageDraw.Draw(temp)
@@ -35,10 +35,10 @@ else:
 width_first, height_first = text_sample.textsize(phrase[0], font=font)
 
 # Find the midpoint of our font and image (idk the words, vertically centered that's it)
-font_padding_top = (gif_def_height - height_all + (gif_padding/2)) / 2
+font_padding_top = int( (gif_def_height/2) - (height_all/2) + (gif_padding/2) )
 
 # Initialize bg
-bg_img = Image.new('RGB', (gif_def_height + width_all + 50 + int(gif_padding*1.5), int(gif_def_height) + int(gif_padding/2)), background_color)
+bg_img = Image.new('RGB', (gif_def_width + width_all + gif_padding * 2, int(gif_def_height) + int(gif_padding)), background_color)
 
 # Draw first letter
 # ImageDraw.Draw(bg_img).text((160, font_padding_top), phrase[0], fill=first_letter_color, font=font)
@@ -75,11 +75,11 @@ time_start = datetime.datetime.now()
 for i in range(0, logo_gif.n_frames):
     logo_frame = Image.open(f'temp-frames/frame-{i + 1}.png')
     bg_copy = bg_img
-    Image.Image.paste(bg_copy, logo_frame, (int(gif_padding/4), int(gif_padding/3)))
+    Image.Image.paste(bg_copy, logo_frame, (int(gif_padding/2), int(gif_padding/2)))
 
     # These lines can be here or at the top
-    ImageDraw.Draw(bg_copy).text((gif_def_height + gif_padding/1.8, font_padding_top), phrase[0], fill=first_letter_color, font=font)
-    ImageDraw.Draw(bg_copy).text((gif_def_height + width_first + gif_padding/1.8, font_padding_top), phrase[1:], fill=further_letter_color, font=font)
+    ImageDraw.Draw(bg_copy).text((gif_def_height + gif_padding, font_padding_top), phrase[0], fill=first_letter_color, font=font)
+    ImageDraw.Draw(bg_copy).text((gif_def_height + width_first + gif_padding, font_padding_top), phrase[1:], fill=further_letter_color, font=font)
     # End
 
     curtime = datetime.datetime.now()
@@ -92,7 +92,7 @@ for i in range(0, logo_gif.n_frames):
     bg_copy.save(f'frames/frame-{i + 1}.png')
     sys.stdout.write('\r')
     sys.stdout.write(f'Creating final frames{(delta % 4) * "."} ({str(((i + 1)*100)/(logo_gif.n_frames*100) * 100)[:5]}% | ~{str(predicted_time_left)[:4]} seconds left)')
-print('\nDone!.')
+print('\nDone!')
 
 for i in range(0, logo_gif.n_frames):
     frame = Image.open(f'frames/frame-{i + 1}.png')
@@ -121,3 +121,4 @@ async def main():
 
 asyncio.get_event_loop().run_until_complete(main())
 print('\n Gif url copied to clipboard.')
+print(' If the gif feels a bit slow, use https://ezgif.com/speed to speed your gif up :D')
