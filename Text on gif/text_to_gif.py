@@ -32,7 +32,7 @@ else:
 width_first, height_first = text_sample.textsize(phrase[0], font=font)
 
 # Find the midpoint of our font and image (idk the words, vertically centered that's it)
-font_padding_top = (gif_def_height - height_all + int(gif_padding/2)) / 2
+font_padding_top = (gif_def_height - height_all + (gif_padding/1.5)) / 2
 
 # Initialize bg
 bg_img = Image.new('RGB', (gif_def_height + width_all + 50 + int(gif_padding*1.5), int(gif_def_height) + int(gif_padding/2)), background_color)
@@ -104,7 +104,7 @@ subprocess.call([r'create_gif.bat'])
 print('\nInitiating image upload to imgbb.')
 import imgbbpy
 import os
-imgbb_api_key = 'your imgbb api key here'
+imgbb_api_key = 'your imgbb api key'
 
 def addToClipBoard(text):
     command = 'echo | set /p nul=' + text.strip() + '| clip'
