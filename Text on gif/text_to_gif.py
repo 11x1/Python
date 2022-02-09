@@ -1,5 +1,5 @@
 # Before you use this you nedd the requiered libraries: asyncio (might be pythons included library I don't remember), pillow
-# Be sure to add your imgbb api key to line 107
+# Be sure to add your imgbb api key to line 109
 # If you dont have an imgbb api key you can get one here:
 # https://api.imgbb.com/
 #
@@ -17,7 +17,10 @@ first_letter_color = '#eb9fb0'
 further_letter_color = '#d7d7d7'
 background_color = '#2d2d2d'
 
-gif_def_height = 616
+logo_gif = Image.open('logo.gif')
+
+gif_def_height, _, _ = logo_gif.shape()
+gif_def_height = int(gif_def_height)
 gif_padding = 400
 
 # Create a temporary image to find out string size
@@ -32,7 +35,7 @@ else:
 width_first, height_first = text_sample.textsize(phrase[0], font=font)
 
 # Find the midpoint of our font and image (idk the words, vertically centered that's it)
-font_padding_top = (gif_def_height - height_all + (gif_padding/1.5)) / 2
+font_padding_top = (gif_def_height - height_all + (gif_padding/2)) / 2
 
 # Initialize bg
 bg_img = Image.new('RGB', (gif_def_height + width_all + 50 + int(gif_padding*1.5), int(gif_def_height) + int(gif_padding/2)), background_color)
@@ -46,7 +49,6 @@ bg_img = Image.new('RGB', (gif_def_height + width_all + 50 + int(gif_padding*1.5
 # bg_img.save('output.png')
 
 # Saves every frame of our base logo gif
-logo_gif = Image.open('logo.gif')
 time_start = datetime.datetime.now()
 for i in range(0, logo_gif.n_frames):
     logo_gif.seek(i)
