@@ -1,6 +1,6 @@
 # Before you use this you nedd the requiered libraries: asyncio (might be pythons included library I don't remember), pillow
-# Be sure to add your imgbb api key to line 109
-# If you dont have an imgbb api key you can get one here:
+# Be sure to add your imgbb api key to line 109 or use the one provided
+# If you dont have an imgbb api key or you want to use another one, you can get one here:
 # https://api.imgbb.com/
 #
 # Code by khey
@@ -106,7 +106,7 @@ subprocess.call([r'create_gif.bat'])
 print('\nInitiating image upload to imgbb.')
 import imgbbpy
 import os
-imgbb_api_key = 'your imgbb api key'
+imgbb_api_key = '386284f39d7680e2a4bc0bcb78ba8a1d'
 
 def addToClipBoard(text):
     command = 'echo | set /p nul=' + text.strip() + '| clip'
