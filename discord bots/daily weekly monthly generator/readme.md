@@ -9,3 +9,6 @@ Users:
 !dgen - daily generator  
 !wgen - weekly generator  
 !mgen - monthly generator  
+  
+  
+Needed python lib(s): configparser, discord, requests, mysql-connector-python
